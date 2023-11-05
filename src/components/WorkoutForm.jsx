@@ -1,15 +1,13 @@
 // import { useSelector } from "react-redux";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addItem, loadingChange } from "../ToDoSlice";
+import { useDispatch } from "react-redux";
+import { postTodos } from "../ToDoSlice";
 
 export default function WorkoutForm() {
-  const { loading } = useSelector((state) => state.todo);
-  console.log(loading);
-
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const dispatch = useDispatch();
 
   function handleClick(e) {
     e.preventDefault();
@@ -21,30 +19,7 @@ export default function WorkoutForm() {
       description,
     };
 
-    async function postJSON(data) {
-      try {
-        dispatch(loadingChange());
-        const res = await fetch("http://localhost:3000/todos", {
-          method: "POST", // or 'PUT'
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-
-        if (!res.ok) throw new Error("Could not add the data");
-
-        const item = await res.json();
-
-        dispatch(addItem(item));
-        console.log("Success:", item);
-        dispatch(loadingChange());
-      } catch (error) {
-        console.error("Error:", error.message);
-      }
-    }
-
-    postJSON(newListItem);
+    dispatch(postTodos(newListItem));
     setTitle("");
     setDescription("");
   }

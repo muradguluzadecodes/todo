@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { TrashIcon } from "../assets/icons";
-import { deleteItem } from "../ToDoSlice";
+import { deleteItemFromAPI } from "../ToDoSlice";
 
 // eslint-disable-next-line react/prop-types
 function FunWorkoutDetails({ item }) {
@@ -9,13 +9,7 @@ function FunWorkoutDetails({ item }) {
   const dispatch = useDispatch();
 
   function handleClick() {
-    async function deleteItemFromAPI() {
-      fetch(`http://localhost:3000/todos/${id}`, {
-        method: "DELETE",
-      });
-    }
-    deleteItemFromAPI();
-    dispatch(deleteItem(id));
+    dispatch(deleteItemFromAPI(id));
   }
 
   return (
